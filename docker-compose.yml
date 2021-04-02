@@ -1,0 +1,40 @@
+version: "3.8"
+    
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+            - /media/snipe-mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "snipe"
+      MYSQL_DATABASE: "snipe"
+      MYSQL_USER: "snipe"
+      MYSQL_PASSWORD: "snipe"
+      TZ: "Auastralia/Sydney"
+      
+    
+  web:
+    depends_on:
+      - db
+    command: sh -c "/wait && /startup.sh"
+    build: .
+    ports:
+      - "8082:80"
+    restart: always
+    environment:
+      WAIT_HOSTS: db:3306
+      PUID: "1000"
+      PGID: "1000"
+      DB_CONNECTION: "db"
+      DB_HOST: "db"
+      DB_DATABASE: "snipe"
+      DB_USERNAME: "snipe"
+      DB_PASSWORD: "snipe"
+      APP_KEY: "base64:5U/KPKw1GN/Rz0fWYO/4FsSOqjmjvDAQzMCqwcAqstc="
+    volumes:
+            - /media/snipe-conf:/config
+
+    
