@@ -3,6 +3,7 @@ version: "3.8"
 services:
   db:
     image: mysql:latest
+    command: mysqld --sql_mode=""
     ports:
       - "3306:3306"
     volumes:
