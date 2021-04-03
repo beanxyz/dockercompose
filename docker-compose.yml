@@ -3,7 +3,6 @@ version: "3.8"
 services:
   db:
     image: mysql:latest
-    command: mysqld --sql_mode=""
     ports:
       - "3306:3306"
     volumes:
@@ -20,7 +19,6 @@ services:
   web:
     depends_on:
       - db
-    command: sh -c "/wait && /startup.sh"
     build: .
     ports:
       - "8082:80"
@@ -29,7 +27,7 @@ services:
       WAIT_HOSTS: db:3306
       PUID: "1000"
       PGID: "1000"
-      DB_CONNECTION: "db"
+      DB_CONNECTION: "mysql"
       DB_HOST: "db"
       DB_DATABASE: "snipe"
       DB_USERNAME: "snipe"
