@@ -6,7 +6,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-            - /media/snipe-mysql:/var/lib/mysql
+            - snipe-mysql:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "snipe"
@@ -32,8 +32,10 @@ services:
       DB_DATABASE: "snipe"
       DB_USERNAME: "snipe"
       DB_PASSWORD: "snipe"
-      APP_KEY: "base64:5U/KPKw1GN/Rz0fWYO/4FsSOqjmjvDAQzMCqwcAqstc="
+      APP_KEY: "${API_KEY}"
     volumes:
-            - /media/snipe-conf:/config
+            - snipe-conf:/config
 
-    
+volumes:
+  snipe-mysql:
+  snipe-conf:
